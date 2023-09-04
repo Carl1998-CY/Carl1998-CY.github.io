@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2023/9 | Mr.Carl的博客</title>
+  <title>C++的内存分配 | Mr.Carl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Mr.Carl&#39;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Mr.Carl的博客">
-<meta property="og:url" content="http://example.com/archives/2023/09/index.html">
+  <meta name="description" content="一、new 和malloc 的区别 都可用来申请动态内存和释放内存，都是在堆(heap)上进行动态的内存操作。  malloc和free是c语言的标准库函数，new&#x2F;delete是C++的运算符。  new会自动调用对象的构造函数，delete 会调用对象的析构函数, 而malloc返回的都是void指针。  对于非内部数据类型的对象而言，光用malloc和free无法满足动态对象的要求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++的内存分配">
+<meta property="og:url" content="http://example.com/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/index.html">
 <meta property="og:site_name" content="Mr.Carl的博客">
-<meta property="og:description" content="Mr.Carl&#39;s Blog">
+<meta property="og:description" content="一、new 和malloc 的区别 都可用来申请动态内存和释放内存，都是在堆(heap)上进行动态的内存操作。  malloc和free是c语言的标准库函数，new&#x2F;delete是C++的运算符。  new会自动调用对象的构造函数，delete 会调用对象的析构函数, 而malloc返回的都是void指针。  对于非内部数据类型的对象而言，光用malloc和free无法满足动态对象的要求">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-04T01:30:28.000Z">
+<meta property="article:modified_time" content="2023-09-04T01:39:01.129Z">
 <meta property="article:author" content="Mr.carl">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -153,97 +155,228 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-C++的内存分配" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      C++的内存分配
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="archive-article-date">
+
+        
+        <a href="/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="archive-article-date">
   	<time datetime="2023-09-04T01:30:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">C++的内存分配</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、new-和malloc-的区别"><a href="#一、new-和malloc-的区别" class="headerlink" title="一、new 和malloc 的区别"></a>一、new 和malloc 的区别</h1><ol>
+<li><p>都可用来申请动态内存和释放内存，都是在堆(heap)上进行动态的内存操作。</p>
+</li>
+<li><p>malloc和free是c语言的标准库函数，new&#x2F;delete是C++的运算符。</p>
+</li>
+<li><p>new会自动调用对象的构造函数，delete 会调用对象的析构函数, 而malloc返回的都是void指针。</p>
+</li>
+<li><p>对于非内部数据类型的对象而言，光用malloc和free无法满足动态对象的要求。</p>
+</li>
+<li><p>因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new，以一个能完成清理与释放内存工作的运算符delete。注意<strong>new&#x2F;delete不是库函数</strong>。</p>
+</li>
+</ol>
+<h1 id="二、C-的内存分配"><a href="#二、C-的内存分配" class="headerlink" title="二、C++的内存分配"></a>二、C++的内存分配</h1><p>在C++中，内存分为5个区，他们分别是:</p>
+<ul>
+<li><strong>堆区：</strong>一般由程序员自动分配，如果程序员没有释放，程序结束时可能有OS回收。其分配类似于链表。</li>
+<li><strong>栈区：</strong>由编译器自动分配和释放，存放为运行函数分配的局部变量，函数参数，返回数据，返回地址等，其操作类似于数据结构总的栈。</li>
+<li><strong>全局区（静态区static）：</strong>存放全局变量，静态变量，常量。结束后由系统释放。</li>
+<li><strong>常量区（文字常量区）：</strong>存放常量字符串，程序结束后有系统释放。</li>
+<li><strong>代码区</strong>：存放函数体（类成员函数和全局区）的二进制代码。</li>
+</ul>
+<h1 id="三、简述C、C-程序编译的内存分配情况"><a href="#三、简述C、C-程序编译的内存分配情况" class="headerlink" title="三、简述C、C++程序编译的内存分配情况"></a>三、简述C、C++程序编译的内存分配情况</h1><ul>
+<li><strong>从静态存储区域分配：</strong></li>
+</ul>
+<p>内存在程序编译时就已经分配好，这块内存在程序的整个运行期间都存在 。速度快、不容易出错 ， 因为有系统会善后。例如全局变量， static 变量， 常量字符串等。</p>
+<ul>
+<li><strong>在栈上分配：</strong></li>
+</ul>
+<p>在执行函数时， 函数内<strong>局部变量</strong>的存储单元都在栈上创建，函数执行结束时这些存储单元自动被释放。栈内存分配运算内置于处理器的指令集中， 效率很高， 但是<strong>分配的内存容量有限 ：大小为2M</strong>。</p>
+<ul>
+<li><strong>从堆上分配：</strong></li>
+</ul>
+<p>即动态内存分配。程序在运行的时候用 malloc 或 new 申请任意大小的内存，程序员自己负责在何时用 free 或delete 释放内存。动态内存的生存期由程序员决定，使用非常灵活。如果在堆上分配了空间，就有责任回收它，否则运行的程序会出现内存泄漏 ，另外频繁地分配和释放不同大小的堆空间将会产生堆内碎块 。</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/09/02/Juanjuan&Xiaobanli/" class="archive-article-date">
-  	<time datetime="2023-09-02T15:41:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-02</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2023/09/02/Juanjuan&Xiaobanli/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">娟娟和小板栗的日常</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/09/02/Juanjuan&Xiaobanli/">娟娟和小板栗的日常</a>
-    </h1>
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="C++的内存分配" data-title="C++的内存分配" data-url="http://example.com/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://example.com/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/", 
+    sourceId: "C++的内存分配",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/09/02/Github%20%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%96%B9%E6%A1%88/" class="archive-article-date">
-  	<time datetime="2023-09-02T15:33:28.782Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-02</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
+  <div id="SOHUCS" sid="C++的内存分配" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "true",
+        conf: "true"
+    });
+</script>
+</script>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -266,8 +399,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
