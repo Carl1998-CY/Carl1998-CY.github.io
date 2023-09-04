@@ -155,6 +155,192 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-C++面试八股" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/09/04/C++%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1/">C++面试八股 学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2023/09/04/C++%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1/" class="archive-article-date">
+  	<time datetime="2023-09-04T01:59:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常用api:</span></span><br><span class="line"><span class="function">T* <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">T&amp; <span class="keyword">operator</span>*();</span><br><span class="line">T* <span class="keyword">operator</span>-&gt;();</span><br><span class="line">T&amp; <span class="keyword">operator</span>=(<span class="type">const</span> T&amp; val);</span><br><span class="line"><span class="function">T* <span class="title">release</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">reset</span> <span class="params">(T* ptr = <span class="literal">nullptr</span>)</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>auto_ptr（C++98 的⽅案，C11 已抛弃）采⽤所有权模式。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p2 = p1; <span class="comment">//auto_ptr 不会报错.</span></span><br></pre></td></tr></table></figure>
+
+<p>p2 剥夺了 p1 的所有权，但是当程序运⾏时访问 p1 将会报错。</p>
+<p>所以 auto_ptr 的<strong>缺点</strong>是：存在潜在的内存崩溃问题！</p>
+</li>
+<li><p>unique_ptr（替换 auto_ptr ）</p>
+<p>保证同⼀时间内只有⼀个智能指针可以指向该对象</p>
+</li>
+<li><p>shared_ptr（共享型，强引⽤）</p>
+<p>资源可以被多个指针共享</p>
+<p>通过成员函数 use_count() 来查看资源的所有者个数</p>
+<p>当我们调⽤ release() 时，当前指针会释放资源所有权，计数减⼀。当计数等于 0 时，资源会被释放。</p>
+</li>
+<li><p>weak_ptr（弱引⽤）</p>
+<p>weak_ptr 是⼀种不控制对象⽣命周期的智能指针，它指向⼀个 shared_ptr 管理的对象。进⾏该对象的内存管理的是那个强引⽤的 shared_ptr。</p>
+<p>weak_ptr 是⽤来解决 shared_ptr 相互引⽤时的<strong>死锁</strong>问题。解决办法：把其中⼀个改为weak_ptr就可以。</p>
+</li>
+</ul>
+<h2 id="C-中内存分配情况"><a href="#C-中内存分配情况" class="headerlink" title="C++ 中内存分配情况"></a>C++ 中内存分配情况</h2><ul>
+<li>栈：由编译器管理分配和回收，存放局部变量和函数参数。</li>
+<li>堆：由程序员管理，需要⼿动 new malloc delete free 进⾏分配和回收，空间较⼤，但可能会出现内存泄漏和空闲 碎⽚的情况。 </li>
+<li>全局&#x2F;静态存储区：分为初始化和未初始化两个相邻区域，存储初始化和未初始化的全局变量和静态变量。 </li>
+<li>常量存储区：存储常量，⼀般不允许修改。 </li>
+<li>代码区：存放程序的⼆进制代码。</li>
+</ul>
+<h2 id="static关键字和const关键字"><a href="#static关键字和const关键字" class="headerlink" title="static关键字和const关键字"></a>static关键字和const关键字</h2><h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><ul>
+<li>static 成员函数不能被 virtual 修饰，<strong>static 成员不属于任何对象或实例</strong></li>
+<li>静态⾮常量数据成员，其只能在类外定义和初始化，在类内仅是声明⽽已</li>
+</ul>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><ul>
+<li><p>const 修饰指针变量和引⽤变量：</p>
+<p><strong>const 位于⼩星星的左侧：</strong> const 就是⽤来修饰指针所指向的变量——-<strong>指针指向为常量</strong></p>
+<p><strong>const 位于⼩星星的右侧</strong>： const 就是修饰指针本身——–即<strong>指针本身是常量</strong></p>
+</li>
+<li><p><strong>const 在类中的⽤法</strong>：const 成员变量，只在某个对象⽣命周期内是常量，⽽对于整个类⽽⾔是可以改变的。</p>
+</li>
+</ul>
+<h2 id="C-中重载和重写，重定义的区别"><a href="#C-中重载和重写，重定义的区别" class="headerlink" title="C++ 中重载和重写，重定义的区别"></a>C++ 中重载和重写，重定义的区别</h2><h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>可以是参数类型，个数，顺序的不同。根据参数列表决定调⽤哪个函数，重载不关⼼函数的返回类型</p>
+<h3 id="重写"><a href="#重写" class="headerlink" title="重写"></a>重写</h3><p>派⽣类中重新定义⽗类中除了函数体外完全相同的虚函数，注意被重写的函数不能是 static 的， ⼀定要是虚函数，且其他⼀定要完全相同</p>
+<p>重写函数的访问修饰符是可以不同的，<strong>尽管 virtual 中是 private 的，派⽣类中重写可以改为 public</strong></p>
+<h3 id="重定义"><a href="#重定义" class="headerlink" title="重定义"></a>重定义</h3><p>派⽣类重新定义⽗类中相同名字的<strong>⾮ virtual</strong> 函数，参数列表和返回类型都可以不同，即⽗类中除了定义成 virtual 且完全相同的同名函数才不会被派⽣类中的同名函数所隐藏（重定义）</p>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><h3 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h3><p>默认构造函数</p>
+<h3 id="一般构造函数"><a href="#一般构造函数" class="headerlink" title="一般构造函数"></a>一般构造函数</h3><p>重载构造函数	一个类中可以有多个，但是参数个数和类型不同</p>
+<p>如果不想使⽤⾃动⽣成的⽆参构造函数，必需要⾃⼰显示写出⼀个⽆参构造函数。</p>
+<h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><p>⽤于根据⼀个已存在的对象复制出⼀个新的该类的对象</p>
+<p>最好不要使⽤编译器提供的默认的拷⻉构造函 数，最好⾃⼰定义并且在函数中执⾏<strong>深拷⻉</strong>。</p>
+<h3 id="类型转换构造函数"><a href="#类型转换构造函数" class="headerlink" title="类型转换构造函数"></a>类型转换构造函数</h3><p>⼀个指定类型的对象创建⼀个本类的对象 </p>
+<p>不允许默认转换的话，要记得将其声明为 explict，来阻⽌⼀些隐式转换的发⽣。</p>
+<h3 id="赋值运算符的重载"><a href="#赋值运算符的重载" class="headerlink" title="赋值运算符的重载"></a>赋值运算符的重载</h3><p><strong>＝左右两边的对象必需已经被创建</strong></p>
+<p>这⾥区分：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A a1, A a2; a1 = a2;<span class="comment">//调⽤赋值运算符</span></span><br><span class="line">A a3 = a1;<span class="comment">//调⽤拷⻉构造函数，因为进⾏的是初始化⼯作，a3 并未存在</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="C-的四种强制转换"><a href="#C-的四种强制转换" class="headerlink" title="C++ 的四种强制转换"></a>C++ 的四种强制转换</h3><p><strong>static_cast, dynamic_cast, const_cast, reinterpret_cast</strong></p>
+<ul>
+<li>static_cast：明确指出类型转换	上⾏转换 （派⽣类-&gt;基类）安全，下⾏转换（基类-&gt;派⽣类） 不安全	<strong>主要执⾏⾮多态的转换操作</strong></li>
+<li>dynamic_cast：专⻔⽤于<strong>派⽣类之间</strong>的转换    type-id 必须是类指针，类引⽤或 void*    <strong>下⾏转换是安全</strong>  	当类型不⼀致时，转换过来的是<strong>空指针</strong>    static_cast，当类型不⼀致时，转换过来的事错误意义的指 针，可能造成⾮法访问等问题</li>
+<li>const_cast：专⻔⽤于 const 属性的转换（去除 const 性质，或增加 const 性质）可以操作常量（唯一）</li>
+<li>reinterpret_cast：<strong>不到万不得已，不要使⽤</strong>这个转换符，⾼危操作。使⽤特点： 从底层对数据进⾏᯿新解 释，依赖具体的平台，可移植性差； <strong>可以将整形转换为指针，也可以把指针转换为数组；可以在指针和引⽤ 之间进⾏肆⽆忌惮的转换。</strong></li>
+</ul>
+<h3 id="指针和引用的区别"><a href="#指针和引用的区别" class="headerlink" title="指针和引用的区别"></a>指针和引用的区别</h3><p>都是地址	在程序编译的时候，将指针和引⽤添加到<strong>符号表</strong>中。</p>
+<p><strong>指针</strong>来说，是所指向的<strong>内存的地址</strong>	添加到符号表：<strong>指针变量名-指针变量的地址</strong>	内容	<strong>可以改变</strong> <strong>可以为空 有 const 和⾮ const 区别</strong></p>
+<p><strong>引⽤</strong>来说，它只是⼀块<strong>内存的别名</strong>	添加到符号表：<strong>引⽤变量名-引⽤对象的地址</strong>	引用在定义时被绑定到一块内存，<strong>不可改变</strong> <strong>不能为 空，也没有 const 和⾮ const 区别。</strong></p>
+<p>sizeof 引⽤得到代表对象的⼤⼩。⽽ sizeof 指针得到的是指针本身的⼤⼩</p>
+<p>在参数传递中，指针需要被<strong>解引⽤</strong> 后才可以对对象进⾏操作，⽽直<strong>接对引⽤进⾏的修改会直接作⽤到引⽤对象上</strong>。</p>
+<h3 id="野-wild-指针与悬空-dangling-指针有什么区别？如何避免？"><a href="#野-wild-指针与悬空-dangling-指针有什么区别？如何避免？" class="headerlink" title="野(wild)指针与悬空(dangling)指针有什么区别？如何避免？"></a>野(wild)指针与悬空(dangling)指针有什么区别？如何避免？</h3><p>野指针(wild pointer)：就是<strong>没有被初始化</strong>过的指针。</p>
+<p>悬空指针：是指针最初指向的内存已经被释放了的⼀种指针。</p>
+<p>如何避免：定义完成之后初始化、或者使用智能指针。</p>
+<h3 id="说⼀下-const-修饰指针如何区分？"><a href="#说⼀下-const-修饰指针如何区分？" class="headerlink" title="说⼀下 const 修饰指针如何区分？"></a>说⼀下 const 修饰指针如何区分？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const int * p1; //指向整形常量的指针，它指向的值不能修改</span><br><span class="line">int * const p2; //指向整形的常量指针 ，它不能在指向别的变量，但指向（变量）的值可以修改。</span><br><span class="line">const int *const p3; //指向整形常量的常量指针 。它既不能再指向别的常量，指向的值也不能修改。</span><br></pre></td></tr></table></figure>
+
+<p>总结：const在小星星左侧修饰指向的值、在小星星右侧修饰其本身</p>
+<h3 id="简单说⼀下函数指针"><a href="#简单说⼀下函数指针" class="headerlink" title="简单说⼀下函数指针"></a>简单说⼀下函数指针</h3><p>定义和⽤途</p>
+<p>定义：函数指针是指向函数的指针变量。在编译时，每⼀个函数都有⼀个⼊⼝地址，该⼊⼝地址就是函数指针所指向的地址。</p>
+<p>⽤途：调⽤函数和做函数的参数，⽐如回调函数。</p>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">char</span> * <span class="title">fun</span><span class="params">(<span class="type">char</span> * p)</span> </span>&#123;…&#125; <span class="comment">// 函数fun</span></span><br><span class="line"><span class="type">char</span> * (*pf)(<span class="type">char</span> * p); <span class="comment">// 函数指针pf</span></span><br><span class="line">pf = fun; <span class="comment">// 函数指针pf指向函数fun</span></span><br><span class="line"><span class="built_in">pf</span>(p); <span class="comment">// 通过函数指针pf调⽤函数fun</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="堆和栈区别"><a href="#堆和栈区别" class="headerlink" title="堆和栈区别"></a>堆和栈区别</h3><p><strong>栈：</strong></p>
+<ul>
+<li>编译器进⾏管理 自动分配、自动回收  保存局部变量和函数参数等</li>
+<li>连续内存空间。函数调用时，先入栈的是主函数的下一条可执行指令的地址，然后是函数的各个参数，从右向左⼊栈本次函数调⽤结束时，局部变量先出栈，然后是参数，最后是栈顶指针最开始存放的地址。</li>
+</ul>
+<p><strong>堆：</strong></p>
+<ul>
+<li>程序员管理  new malloc delete free 进⾏分配和回收  当有剩余空间时，<strong>会将剩余的插入到空闲链表中，这也是产生内存碎片的原因</strong></li>
+</ul>
+<h3 id="函数传参的几种方式"><a href="#函数传参的几种方式" class="headerlink" title="函数传参的几种方式"></a>函数传参的几种方式</h3><ul>
+<li>值传递：形参是实参的拷贝，函数内部对形参的操作并不会影响到外部的实参。</li>
+<li>指针传递</li>
+<li>引用传递：函数内部对形参的任何操作可以直接映射到外部的实参上⾯。&amp;a、&amp;b……</li>
+</ul>
+<h3 id="new-x2F-delete-，malloc-x2F-free-区别"><a href="#new-x2F-delete-，malloc-x2F-free-区别" class="headerlink" title="new &#x2F; delete ，malloc &#x2F; free 区别"></a>new &#x2F; delete ，malloc &#x2F; free 区别</h3><p>new &#x2F;delete 是<strong>操作符</strong>		malloc&#x2F;free 是<strong>库函数</strong></p>
+<p><strong>执⾏ new 实际上执⾏两个过程：</strong></p>
+<ol>
+<li>分配未初始化的内存空间（<strong>malloc</strong>）；</li>
+<li>使⽤对象的构造函数对空间进⾏初始化；返回空间的⾸地址。如果在第⼀步分配空间中出现问题，则抛出 std::bad_alloc 异常，或被某个设定的异常处理函数捕获处理；如果在第⼆步构造对象时出现异常，则⾃动调⽤ delete 释放内存。</li>
+</ol>
+<p><strong>执⾏ delete 实际上也有两个过程：</strong></p>
+<ol>
+<li>使⽤析构函数对对象进⾏析构；</li>
+<li>回收内存空间（free）</li>
+</ol>
+<h3 id="volatile-和-extern-关键字"><a href="#volatile-和-extern-关键字" class="headerlink" title="volatile 和 extern 关键字"></a>volatile 和 extern 关键字</h3><p><strong>volatile：</strong></p>
+<p>遇到这个关键字声明的变量，编译器对访问该变量的代码就不再进行优化，从而可以提供对<strong>特殊地址的稳定访问</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">int</span> i=<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> a = i;</span><br><span class="line">...</span><br><span class="line"><span class="comment">// 其他代码，并未明确告诉编译器，对 i 进行过操作</span></span><br><span class="line"><span class="type">int</span> b = i;</span><br></pre></td></tr></table></figure>
+
+<p>优化做法是，由于编译器发现两次从 i读数据的代码之间的代码没有对 i 进行过操作，它会自动把上次读的数据放在 b 中。<strong>而不是重新从 i 里面读。</strong></p>
+<ul>
+<li><p><strong>易变性：</strong>在汇编层面反映出来，就是两条语句，下⼀条语句不会直接使⽤上⼀条语句对应的 volatile 变ᰁ的寄存器 内容，⽽是重新从内存中读取。 </p>
+</li>
+<li><p><strong>不可优化性：</strong>volatile 告诉编译器，不要对我这个变ᰁ进⾏各种激进的优化，甚⾄将变量直接消除，保证程序员写 在代码中的指令，⼀定会被执⾏。 </p>
+</li>
+<li><p><strong>顺序性：</strong>能够保证 volatile 变ᰁ之间的顺序性，编译器不会进⾏乱序优化。</p>
+</li>
+</ul>
+<p><strong>extern：</strong></p>
+<p>此变量&#x2F;函数是在别处定义的，要在此处引用	extern 会加速程序的编译过程，这样能节省时间。</p>
+<h3 id="define-和-const-区别（编译阶段、安全性、内存占⽤等）"><a href="#define-和-const-区别（编译阶段、安全性、内存占⽤等）" class="headerlink" title="define 和 const 区别（编译阶段、安全性、内存占⽤等）"></a>define 和 const 区别（编译阶段、安全性、内存占⽤等）</h3><p><strong>define</strong></p>
+<p>宏定义实际上是在<strong>预编译</strong>阶段进⾏处理	没有类型，也就没有类型检查，仅仅做的是遇到宏定义进⾏字符串的展开，遇到多少次就展开多少次，⽽且这个简单的展开过程中，很容易出现边界效应，达不到预期 的效果。</p>
+<p><strong>const</strong></p>
+<p>在<strong>编译</strong>期间进⾏处理的</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2023/09/04/C++%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-C++的内存分配" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -175,7 +361,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一、new-和malloc-的区别"><a href="#一、new-和malloc-的区别" class="headerlink" title="一、new 和malloc 的区别"></a>一、new 和malloc 的区别</h1><ol>
+        <h2 id="一、new-和malloc-的区别"><a href="#一、new-和malloc-的区别" class="headerlink" title="一、new 和malloc 的区别"></a>一、new 和malloc 的区别</h2><ul>
 <li><p>都可用来申请动态内存和释放内存，都是在堆(heap)上进行动态的内存操作。</p>
 </li>
 <li><p>malloc和free是c语言的标准库函数，new&#x2F;delete是C++的运算符。</p>
@@ -186,8 +372,8 @@
 </li>
 <li><p>因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new，以一个能完成清理与释放内存工作的运算符delete。注意<strong>new&#x2F;delete不是库函数</strong>。</p>
 </li>
-</ol>
-<h1 id="二、C-的内存分配"><a href="#二、C-的内存分配" class="headerlink" title="二、C++的内存分配"></a>二、C++的内存分配</h1><p>在C++中，内存分为5个区，他们分别是:</p>
+</ul>
+<h2 id="二、C-的内存分配"><a href="#二、C-的内存分配" class="headerlink" title="二、C++的内存分配"></a>二、C++的内存分配</h2><p>在C++中，内存分为5个区，他们分别是:</p>
 <ul>
 <li><strong>堆区：</strong>一般由程序员自动分配，如果程序员没有释放，程序结束时可能有OS回收。其分配类似于链表。</li>
 <li><strong>栈区：</strong>由编译器自动分配和释放，存放为运行函数分配的局部变量，函数参数，返回数据，返回地址等，其操作类似于数据结构总的栈。</li>
@@ -195,7 +381,7 @@
 <li><strong>常量区（文字常量区）：</strong>存放常量字符串，程序结束后有系统释放。</li>
 <li><strong>代码区</strong>：存放函数体（类成员函数和全局区）的二进制代码。</li>
 </ul>
-<h1 id="三、简述C、C-程序编译的内存分配情况"><a href="#三、简述C、C-程序编译的内存分配情况" class="headerlink" title="三、简述C、C++程序编译的内存分配情况"></a>三、简述C、C++程序编译的内存分配情况</h1><ul>
+<h2 id="三、简述C、C-程序编译的内存分配情况"><a href="#三、简述C、C-程序编译的内存分配情况" class="headerlink" title="三、简述C、C++程序编译的内存分配情况"></a>三、简述C、C++程序编译的内存分配情况</h2><ul>
 <li><strong>从静态存储区域分配：</strong></li>
 </ul>
 <p>内存在程序编译时就已经分配好，这块内存在程序的整个运行期间都存在 。速度快、不容易出错 ， 因为有系统会善后。例如全局变量， static 变量， 常量字符串等。</p>
@@ -269,7 +455,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="娟娟和小板栗的日常"><a href="#娟娟和小板栗的日常" class="headerlink" title="娟娟和小板栗的日常"></a>娟娟和小板栗的日常</h1><h1 id="测试图片"><a href="#测试图片" class="headerlink" title="测试图片"></a>测试图片</h1><p><img src="/2023/09/02/Juanjuan&Xiaobanli/1.jpg"></p>
+        <h2 id="娟娟和小板栗"><a href="#娟娟和小板栗" class="headerlink" title="娟娟和小板栗"></a>娟娟和小板栗</h2><p>娟娟生日：农历1998-09-17</p>
+<p>小板栗生日：2023-2-24</p>
 
       
 
