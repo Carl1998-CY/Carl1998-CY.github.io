@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>C++面试八股 学习笔记 | Mr.Carl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="智能指针1234567&#x2F;&#x2F; 常用api:T* get();T&amp; operator*();T* operator-&gt;();T&amp; operator&#x3D;(const T&amp; val);T* release();void reset (T* ptr &#x3D; nullptr)   auto_ptr（C++98 的⽅案，C11 已抛弃）采⽤所有权模式。 1p2 &#x3D; p1; &#x2F;&#x2F;auto_">
+  <meta name="description" content="C++语法智能指针1234567&#x2F;&#x2F; 常用api:T* get();T&amp; operator*();T* operator-&gt;();T&amp; operator&#x3D;(const T&amp; val);T* release();void reset (T* ptr &#x3D; nullptr)   auto_ptr（C++98 的⽅案，C11 已抛弃）采⽤所有权模式。 1p2 &#x3D; p1; &#x2F;&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++面试八股 学习笔记">
 <meta property="og:url" content="http://example.com/2023/09/04/C++%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1/index.html">
 <meta property="og:site_name" content="Mr.Carl的博客">
-<meta property="og:description" content="智能指针1234567&#x2F;&#x2F; 常用api:T* get();T&amp; operator*();T* operator-&gt;();T&amp; operator&#x3D;(const T&amp; val);T* release();void reset (T* ptr &#x3D; nullptr)   auto_ptr（C++98 的⽅案，C11 已抛弃）采⽤所有权模式。 1p2 &#x3D; p1; &#x2F;&#x2F;auto_">
+<meta property="og:description" content="C++语法智能指针1234567&#x2F;&#x2F; 常用api:T* get();T&amp; operator*();T* operator-&gt;();T&amp; operator&#x3D;(const T&amp; val);T* release();void reset (T* ptr &#x3D; nullptr)   auto_ptr（C++98 的⽅案，C11 已抛弃）采⽤所有权模式。 1p2 &#x3D; p1; &#x2F;&#x2F;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-09-04T01:59:43.000Z">
-<meta property="article:modified_time" content="2023-09-04T06:28:13.843Z">
+<meta property="article:modified_time" content="2023-09-06T08:16:14.035Z">
 <meta property="article:author" content="Mr.carl">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常用api:</span></span><br><span class="line"><span class="function">T* <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">T&amp; <span class="keyword">operator</span>*();</span><br><span class="line">T* <span class="keyword">operator</span>-&gt;();</span><br><span class="line">T&amp; <span class="keyword">operator</span>=(<span class="type">const</span> T&amp; val);</span><br><span class="line"><span class="function">T* <span class="title">release</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">reset</span> <span class="params">(T* ptr = <span class="literal">nullptr</span>)</span></span></span><br></pre></td></tr></table></figure>
+        <h1 id="C-语法"><a href="#C-语法" class="headerlink" title="C++语法"></a>C++语法</h1><h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常用api:</span></span><br><span class="line"><span class="function">T* <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">T&amp; <span class="keyword">operator</span>*();</span><br><span class="line">T* <span class="keyword">operator</span>-&gt;();</span><br><span class="line">T&amp; <span class="keyword">operator</span>=(<span class="type">const</span> T&amp; val);</span><br><span class="line"><span class="function">T* <span class="title">release</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">reset</span> <span class="params">(T* ptr = <span class="literal">nullptr</span>)</span></span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>auto_ptr（C++98 的⽅案，C11 已抛弃）采⽤所有权模式。</p>
@@ -197,18 +197,18 @@
 <p>weak_ptr 是⽤来解决 shared_ptr 相互引⽤时的<strong>死锁</strong>问题。解决办法：把其中⼀个改为weak_ptr就可以。</p>
 </li>
 </ul>
-<h2 id="C-中内存分配情况"><a href="#C-中内存分配情况" class="headerlink" title="C++ 中内存分配情况"></a>C++ 中内存分配情况</h2><ul>
+<h3 id="C-中内存分配情况"><a href="#C-中内存分配情况" class="headerlink" title="C++ 中内存分配情况"></a>C++ 中内存分配情况</h3><ul>
 <li>栈：由编译器管理分配和回收，存放局部变量和函数参数。</li>
 <li>堆：由程序员管理，需要⼿动 new malloc delete free 进⾏分配和回收，空间较⼤，但可能会出现内存泄漏和空闲 碎⽚的情况。 </li>
 <li>全局&#x2F;静态存储区：分为初始化和未初始化两个相邻区域，存储初始化和未初始化的全局变量和静态变量。 </li>
 <li>常量存储区：存储常量，⼀般不允许修改。 </li>
 <li>代码区：存放程序的⼆进制代码。</li>
 </ul>
-<h2 id="static关键字和const关键字"><a href="#static关键字和const关键字" class="headerlink" title="static关键字和const关键字"></a>static关键字和const关键字</h2><h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><ul>
+<h3 id="static关键字和const关键字"><a href="#static关键字和const关键字" class="headerlink" title="static关键字和const关键字"></a>static关键字和const关键字</h3><h4 id="static"><a href="#static" class="headerlink" title="static"></a>static</h4><ul>
 <li>static 成员函数不能被 virtual 修饰，<strong>static 成员不属于任何对象或实例</strong></li>
 <li>静态⾮常量数据成员，其只能在类外定义和初始化，在类内仅是声明⽽已</li>
 </ul>
-<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><ul>
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><ul>
 <li><p>const 修饰指针变量和引⽤变量：</p>
 <p><strong>const 位于⼩星星的左侧：</strong> const 就是⽤来修饰指针所指向的变量——-<strong>指针指向为常量</strong></p>
 <p><strong>const 位于⼩星星的右侧</strong>： const 就是修饰指针本身——–即<strong>指针本身是常量</strong></p>
@@ -216,16 +216,16 @@
 <li><p><strong>const 在类中的⽤法</strong>：const 成员变量，只在某个对象⽣命周期内是常量，⽽对于整个类⽽⾔是可以改变的。</p>
 </li>
 </ul>
-<h2 id="C-中重载和重写，重定义的区别"><a href="#C-中重载和重写，重定义的区别" class="headerlink" title="C++ 中重载和重写，重定义的区别"></a>C++ 中重载和重写，重定义的区别</h2><h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>可以是参数类型，个数，顺序的不同。根据参数列表决定调⽤哪个函数，重载不关⼼函数的返回类型</p>
-<h3 id="重写"><a href="#重写" class="headerlink" title="重写"></a>重写</h3><p>派⽣类中重新定义⽗类中除了函数体外完全相同的虚函数，注意被重写的函数不能是 static 的， ⼀定要是虚函数，且其他⼀定要完全相同</p>
+<h3 id="C-中重载和重写，重定义的区别"><a href="#C-中重载和重写，重定义的区别" class="headerlink" title="C++ 中重载和重写，重定义的区别"></a>C++ 中重载和重写，重定义的区别</h3><h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><p>可以是参数类型，个数，顺序的不同。根据参数列表决定调⽤哪个函数，重载不关⼼函数的返回类型</p>
+<h4 id="重写"><a href="#重写" class="headerlink" title="重写"></a>重写</h4><p>派⽣类中重新定义⽗类中除了函数体外完全相同的虚函数，注意被重写的函数不能是 static 的， ⼀定要是虚函数，且其他⼀定要完全相同</p>
 <p>重写函数的访问修饰符是可以不同的，<strong>尽管 virtual 中是 private 的，派⽣类中重写可以改为 public</strong></p>
-<h3 id="重定义"><a href="#重定义" class="headerlink" title="重定义"></a>重定义</h3><p>派⽣类重新定义⽗类中相同名字的<strong>⾮ virtual</strong> 函数，参数列表和返回类型都可以不同，即⽗类中除了定义成 virtual 且完全相同的同名函数才不会被派⽣类中的同名函数所隐藏（重定义）</p>
-<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><h3 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h3><p>默认构造函数</p>
-<h3 id="一般构造函数"><a href="#一般构造函数" class="headerlink" title="一般构造函数"></a>一般构造函数</h3><p>重载构造函数	一个类中可以有多个，但是参数个数和类型不同</p>
+<h4 id="重定义"><a href="#重定义" class="headerlink" title="重定义"></a>重定义</h4><p>派⽣类重新定义⽗类中相同名字的<strong>⾮ virtual</strong> 函数，参数列表和返回类型都可以不同，即⽗类中除了定义成 virtual 且完全相同的同名函数才不会被派⽣类中的同名函数所隐藏（重定义）</p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><h4 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h4><p>默认构造函数</p>
+<h4 id="一般构造函数"><a href="#一般构造函数" class="headerlink" title="一般构造函数"></a>一般构造函数</h4><p>重载构造函数	一个类中可以有多个，但是参数个数和类型不同</p>
 <p>如果不想使⽤⾃动⽣成的⽆参构造函数，必需要⾃⼰显示写出⼀个⽆参构造函数。</p>
-<h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><p>⽤于根据⼀个已存在的对象复制出⼀个新的该类的对象</p>
+<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>⽤于根据⼀个已存在的对象复制出⼀个新的该类的对象</p>
 <p>最好不要使⽤编译器提供的默认的拷⻉构造函 数，最好⾃⼰定义并且在函数中执⾏<strong>深拷⻉</strong>。</p>
-<h3 id="类型转换构造函数"><a href="#类型转换构造函数" class="headerlink" title="类型转换构造函数"></a>类型转换构造函数</h3><p>⼀个指定类型的对象创建⼀个本类的对象 </p>
+<h4 id="类型转换构造函数"><a href="#类型转换构造函数" class="headerlink" title="类型转换构造函数"></a>类型转换构造函数</h4><p>⼀个指定类型的对象创建⼀个本类的对象 </p>
 <p>不允许默认转换的话，要记得将其声明为 explict，来阻⽌⼀些隐式转换的发⽣。</p>
 <h3 id="赋值运算符的重载"><a href="#赋值运算符的重载" class="headerlink" title="赋值运算符的重载"></a>赋值运算符的重载</h3><p><strong>＝左右两边的对象必需已经被创建</strong></p>
 <p>这⾥区分：</p>
@@ -290,15 +290,144 @@
 </li>
 <li><p><strong>不可优化性：</strong>volatile 告诉编译器，不要对我这个变ᰁ进⾏各种激进的优化，甚⾄将变量直接消除，保证程序员写 在代码中的指令，⼀定会被执⾏。 </p>
 </li>
-<li><p><strong>顺序性：</strong>能够保证 volatile 变ᰁ之间的顺序性，编译器不会进⾏乱序优化。</p>
+<li><p><strong>顺序性：</strong>能够保证 volatile变量之间的顺序性，编译器不会进⾏乱序优化。</p>
 </li>
 </ul>
 <p><strong>extern：</strong></p>
 <p>此变量&#x2F;函数是在别处定义的，要在此处引用	extern 会加速程序的编译过程，这样能节省时间。</p>
-<h3 id="define-和-const-区别（编译阶段、安全性、内存占⽤等）"><a href="#define-和-const-区别（编译阶段、安全性、内存占⽤等）" class="headerlink" title="define 和 const 区别（编译阶段、安全性、内存占⽤等）"></a>define 和 const 区别（编译阶段、安全性、内存占⽤等）</h3><p><strong>define</strong></p>
+<h3 id="define-和-const-区别（编译阶段、安全性、内存占用等）"><a href="#define-和-const-区别（编译阶段、安全性、内存占用等）" class="headerlink" title="define 和 const 区别（编译阶段、安全性、内存占用等）"></a>define 和 const 区别（编译阶段、安全性、内存占用等）</h3><p><strong>define</strong></p>
 <p>宏定义实际上是在<strong>预编译</strong>阶段进⾏处理	没有类型，也就没有类型检查，仅仅做的是遇到宏定义进⾏字符串的展开，遇到多少次就展开多少次，⽽且这个简单的展开过程中，很容易出现边界效应，达不到预期 的效果。</p>
 <p><strong>const</strong></p>
 <p>在<strong>编译</strong>期间进⾏处理的</p>
+<h3 id="C-中的多态"><a href="#C-中的多态" class="headerlink" title="C++中的多态"></a>C++中的多态</h3><p><strong>继承加虚函数</strong>实现，多态与非多态的实质区别就是函数地址是早绑定还是晚绑定的。如果函数的调用，在编译器编译期间就可以确定函数的调⽤地址，并产⽣代码，则是静态的，即地址早绑定。而如果函数调用的地址不能在编译器期间确定，需要在运行时才确定，这就属于晚绑定。</p>
+<p>编译期间确定地址——-早绑定（静态绑定）<br>运行时确定地址———-晚绑定（动态绑定）|<br>virtual 函数是动态绑定的，⾮虚函数是静态绑定的，缺省参数值也是静态绑定的。</p>
+<p>多态可以分为<strong>静态多态</strong>和<strong>动态多态</strong><br>静态多态：重载<br>动态多态：子类重写父类的虚函数</p>
+<p>⼦类继承⽗类时， <strong>⽗类的纯虚函数必须重写</strong>，否则子类也是一个虚类不可实例化</p>
+<h3 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h3><p>当一个类中包含虚函数时,编译器会为该类生成一个<strong>虚函数表</strong>,保存该类中虚函数的地址,编译器也会为<strong>派⽣类⽣成⾃⼰的虚函数表</strong><br>当定义一个<strong>派生类对象</strong>时,会生成一个虚函数指针指向这个虚函数表。虚函数指针的初始化是在构造函数中完成的。<br>当<strong>基类类型的指针指向派生类时</strong>，调用虚函数时，会根据所指真正对象的虚函数表指针去寻找虚函数的地址，也就可以调用派生类的虚函数表中的虚函数实现多态。</p>
+<h4 id="为什么要用基类指针指向派生类对象？"><a href="#为什么要用基类指针指向派生类对象？" class="headerlink" title="为什么要用基类指针指向派生类对象？"></a>为什么要用基类指针指向派生类对象？</h4><p>向不同的对象发送同一个消息，不同的对象在接受时会产生不同的行为。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">double</span> <span class="title">area</span><span class="params">()</span> <span class="type">const</span> </span>= <span class="number">0</span>; <span class="comment">//纯虚函数</span></span><br><span class="line">&#125;;</span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">Square</span> : <span class="keyword">public</span> Shape &#123;</span><br><span class="line">    <span class="type">double</span> size;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Square</span>(<span class="type">double</span> s) &#123;</span><br><span class="line">        size = s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">double</span> <span class="title">area</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size * size;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span> : <span class="keyword">public</span> Shape &#123;</span><br><span class="line">    <span class="type">double</span> radius;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Circle</span>(<span class="type">double</span> r) &#123;</span><br><span class="line">        radius = r;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">double</span> <span class="title">area</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3.14159</span> * radius * radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> <span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">     Shape* array[<span class="number">2</span>]; <span class="comment">//定义基类指针数组</span></span><br><span class="line">     <span class="function">Square <span class="title">Sq</span><span class="params">(<span class="number">2.0</span>)</span></span>;</span><br><span class="line">     <span class="function">Circle <span class="title">Cir</span><span class="params">(<span class="number">1.0</span>)</span></span>;</span><br><span class="line">    array[<span class="number">0</span>] = &amp;Sq;</span><br><span class="line">    array[<span class="number">1</span>] =&amp;Cir;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) /</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; array[i]-&gt;<span class="built_in">area</span>() &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译器处理虚函数表应该如何处理"><a href="#编译器处理虚函数表应该如何处理" class="headerlink" title="编译器处理虚函数表应该如何处理"></a>编译器处理虚函数表应该如何处理</h3><ol>
+<li>拷贝基类函数的虚函数表，如果是多继承，就拷贝每个有虚函数基类的虚函数表</li>
+<li>当然还有⼀个基类的虚函数表和派⽣类⾃身的虚函数表共⽤了⼀个虚函数表，也称为某个基类为派⽣类的主基类</li>
+<li>查看派⽣类中是否有重写基类中的虚函数， 如果有，就替换成已经重写的虚函数地址；查看派⽣类是否有⾃身的虚函数，如果有，就追加⾃身的虚函数到⾃身的虚函数表中。</li>
+</ol>
+<h3 id="析构函数⼀般写成虚函数的原因"><a href="#析构函数⼀般写成虚函数的原因" class="headerlink" title="析构函数⼀般写成虚函数的原因"></a>析构函数⼀般写成虚函数的原因</h3><p><strong>降低内存泄漏的可能性</strong><br>当一个基类指针指向一个派生类的对象时，在析构时，如果基类的析构函数没有定义成虚函数，那么编译器根据指针类型就会认为当前对象的类型是基类，调用基类的析构函数（该对象的析构函数的函数地址早就被绑定为基类的析构函数—–早绑定），仅仅执行基类的析构，派生类自身内容将无法被析构，造成内存泄漏。</p>
+<p>如果基类的析构函数定义成虚函数，编译器执行派生类的析构，在执行基类的析构，成功释放内存。</p>
+<h3 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h3><p>没有参数、没有返回值、不能重载、一个类中只有一个</p>
+<h3 id="构造函数的执行顺序？析构函数的执行顺序？"><a href="#构造函数的执行顺序？析构函数的执行顺序？" class="headerlink" title="构造函数的执行顺序？析构函数的执行顺序？"></a>构造函数的执行顺序？析构函数的执行顺序？</h3><p><strong>构造函数：</strong></p>
+<ol>
+<li>基类构造函数。多个基类按照派生表的顺序（非初始化表）</li>
+<li>成员类对象构造函数。多个的话按照对象在类中被声明的顺序（非初始化表）</li>
+<li>派生类构造函数</li>
+</ol>
+<p><strong>析构函数顺序：</strong></p>
+<ol>
+<li>派生类析构</li>
+<li>成员类对象析构</li>
+<li>基类析构</li>
+</ol>
+<h3 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h3><p>声明⼀个纯虚函数的⽬的就是为了让派⽣类只继承函数的接⼝，⽽且派⽣类中必需提供⼀个这个纯虚函数的 实现，否则含有纯虚函数的类将是抽象类，不能进⾏实例化。</p>
+<h3 id="深拷贝和浅拷贝的区别-举例说明"><a href="#深拷贝和浅拷贝的区别-举例说明" class="headerlink" title="* 深拷贝和浅拷贝的区别(举例说明)"></a>* 深拷贝和浅拷贝的区别(举例说明)</h3><p>当数据成员中有指针时，如果采⽤简单的浅拷⻉，则两类中的两个指针指向同⼀个地址，当对象快要结束时，会 调⽤<strong>两次析构函数</strong>，⽽导致指<strong>野指针</strong>的问题。</p>
+<p>深拷⻉与浅拷⻉之间的区别就在于<strong>深拷⻉会在堆内存中另外申请空间来存储数据</strong>，从⽽也就解决来野指针的问题</p>
+<h3 id="什么情况下会调用拷贝构造函数-三种情况"><a href="#什么情况下会调用拷贝构造函数-三种情况" class="headerlink" title="什么情况下会调用拷贝构造函数(三种情况)"></a>什么情况下会调用拷贝构造函数(三种情况)</h3><ul>
+<li>对象值传递<strong>传入函数体</strong></li>
+<li>对象以值传递的⽅式从<strong>函数返回</strong></li>
+<li>个对象需要通过另外⼀个对象进⾏<strong>初始化</strong></li>
+</ul>
+<h3 id="结构体内存对齐方式和为什么要进行内存对齐？"><a href="#结构体内存对齐方式和为什么要进行内存对齐？" class="headerlink" title="结构体内存对齐方式和为什么要进行内存对齐？"></a>结构体内存对齐方式和为什么要进行内存对齐？</h3><p><strong>定义</strong>：</p>
+<p>在C++中，内存对齐（Memory Alignment）是指数据在内存中存储时的起始位置。在许多硬件平台上，对于特定类型的数据，要求其内存地址必须是某个特定值的倍数。这个特定值称为对齐边界（Alignment Boundary）或对齐要求（Alignment Requirement）。</p>
+<p>内存对齐的原因有多方面：</p>
+<ol>
+<li><strong>提高内存访问效率</strong>：对齐的数据在访问时更容易被处理器读取，因为它们落在特定的内存地址上，而无需额外的操作。</li>
+<li><strong>优化缓存性能</strong>：现代处理器通常采用缓存系统来提高数据访问速度。对齐可以确保数据按照缓存行对齐，避免了跨缓存行的访问，提高了缓存利用率和性能。</li>
+<li><strong>符合硬件要求</strong>：某些硬件平台对数据的对齐有严格要求，不符合对齐要求可能导致访问错误或性能下降。</li>
+</ol>
+<p>可以通过<code>alignof</code>关键字获取特定类型的对齐要求。此外，还可以使用<code>#pragma pack</code>指令或编译器选项来改变默认的对齐方式。</p>
+<p><strong>内存对齐规则（结构体）</strong>：</p>
+<ul>
+<li>第一个成员位于偏移0的位置。每个数据成员的偏移量必须是 min(#pragma pack() 制定的数，数据成员本身⻓度) 的倍数</li>
+<li>在所有的数据成员完成各⾃对⻬之后，结构体或联合体本身也要进⾏对⻬，整体⻓度是 min(#pragma pack() 制定的数，⻓度最⻓的数据成员的⻓度) 的倍数。</li>
+</ul>
+<h3 id="内存泄漏的定义，如何检测与避免？"><a href="#内存泄漏的定义，如何检测与避免？" class="headerlink" title="内存泄漏的定义，如何检测与避免？"></a>内存泄漏的定义，如何检测与避免？</h3><p><strong>定义</strong></p>
+<p>申请了⼀块内存空间，使⽤完毕后没有释放掉。<br>程序申请的⼀块内存，且没有任何⼀个指针指向它，那 么这块内存就泄漏了。</p>
+<p><strong>如何检测内存泄漏</strong></p>
+<ul>
+<li>首先可以通过观察猜测是否可能发⽣内存泄漏，Linux 中使⽤ <strong>swap</strong> 命令观察还有多少可⽤的交换空间，在⼀两分钟内键⼊该命令三到四次，看看可⽤的交换区是否在减少。 </li>
+<li>还可以使⽤ 其他⼀些 <strong>&#x2F;usr&#x2F;bin&#x2F;stat ⼯具如 netstat、vmstat 等</strong>。如发现波段有内存被分配且从不释放，⼀个可能的解释就是有个进程出现了内存泄漏。 </li>
+<li>当然也有⽤于<strong>内存调试</strong>，内存泄漏检测以及性能分析的软件开发⼯具 <strong>valgrind</strong> 这样的⼯具来进⾏内存泄漏的检测。</li>
+</ul>
+<h3 id="说⼀下平衡⼆叉树、⾼度平衡⼆叉树（AVL）"><a href="#说⼀下平衡⼆叉树、⾼度平衡⼆叉树（AVL）" class="headerlink" title="说⼀下平衡⼆叉树、⾼度平衡⼆叉树（AVL）"></a>说⼀下平衡⼆叉树、⾼度平衡⼆叉树（AVL）</h3><p>二叉树</p>
+<h4 id="二叉搜索树："><a href="#二叉搜索树：" class="headerlink" title="二叉搜索树："></a>二叉搜索树：</h4><p><strong>提供对数时间的元素插⼊和访问</strong><br>任何节点的键值⼀定⼤于其左 ⼦树的每⼀个节点的键值，并⼩于其右⼦树中的每⼀个节点的键值。因此⼀直向左⾛可以取得最⼩值，⼀直向右⾛ 可以得到最⼤值。<br>插入：从根节点开始，遇键值较⼤则向左，遇键值较⼩则向右，直到尾端，即插⼊点<br>删除：如果删除点只有⼀个⼦节点，则直接将其⼦节点连⾄⽗节点。如果删除点有两个⼦节点，以右⼦树中的最⼩值代替要删除的位置。</p>
+<h4 id="平衡二叉树："><a href="#平衡二叉树：" class="headerlink" title="平衡二叉树："></a>平衡二叉树：</h4><p>没有任何⼀个节点过深，不同的 平衡条件会造就出不同的效率表现。</p>
+<h4 id="AVL-tree-："><a href="#AVL-tree-：" class="headerlink" title="AVL-tree ："></a>AVL-tree ：</h4><p>⾼度平衡的平衡⼆叉树（严格的平衡⼆叉树）AVL-tree 是要求任何节点的左右⼦树⾼度相差最多为 1 的平衡⼆叉树。 当插⼊新的节点破坏平衡性的时候，从下往上找到第⼀个不平衡点，需要进⾏单旋转，或者双旋转 进⾏调整。</p>
+<h3 id="说⼀下红⿊树（RB-tree）"><a href="#说⼀下红⿊树（RB-tree）" class="headerlink" title="说⼀下红⿊树（RB-tree）"></a>说⼀下红⿊树（RB-tree）</h3><p>性质1：每个节点要么是⿊⾊，要么是红⾊。 </p>
+<p>性质2：根节点是⿊⾊。 </p>
+<p>性质3：每个叶⼦节点（NIL）是⿊⾊。 </p>
+<p>性质4：每个红⾊结点的两个⼦结点⼀定都是⿊⾊。 </p>
+<p>性质5：任意⼀结点到每个叶⼦结点的路径都包含数量相同的⿊结点。</p>
+<h3 id="说⼀下-define、const、typedef、inline-使⽤⽅法？"><a href="#说⼀下-define、const、typedef、inline-使⽤⽅法？" class="headerlink" title="说⼀下 define、const、typedef、inline 使⽤⽅法？"></a>说⼀下 define、const、typedef、inline 使⽤⽅法？</h3><h4 id="const-与-define-的区别"><a href="#const-与-define-的区别" class="headerlink" title="const 与 #define 的区别"></a>const 与 #define 的区别</h4><p>const 定义的常量是变量带类型，⽽ #define 定义的只是个常数不带类型；<br>define 只在<strong>预处理</strong>阶段起作⽤，简单的⽂本替换，⽽ const 在<strong>编译、链接</strong>过程中起作⽤；<br>define 只是简单的字符串替换没有类型检查。⽽const是有数据类型的，是要进⾏判断的，可以避免⼀些低级错误<br>define 预处理后，占⽤代码段空间，const 占⽤数据段空间；<br>const 不能重定义，⽽ define 可以通过 #undef 取消某个符号的定义，进⾏重定义；<br>define 独特功能，⽐如可以⽤来防⽌⽂件重复引⽤。</p>
+<h4 id="define-和别名-typedef-的区别"><a href="#define-和别名-typedef-的区别" class="headerlink" title="#define 和别名 typedef 的区别"></a>#define 和别名 typedef 的区别</h4><p>typedef 在<strong>编译</strong>阶段有效，typedef <strong>有类型检查的功能</strong>；#define 是宏定义，发⽣在<strong>预处理</strong>阶段， 不进⾏类型检查；<br>typedef ⽤来定义类型的别名，定义与平台⽆关的数据类型，与 struct 的结合使⽤等。<br>#define 不只是可以为类型取别名，还可以定义常量、变量、编译开关等。<br>#define 没有作⽤域的限制  typedef有自己的作用域</p>
+<h4 id="define-与-inline-的区别"><a href="#define-与-inline-的区别" class="headerlink" title="define 与 inline 的区别"></a>define 与 inline 的区别</h4><p>#define是关键字，inline是函数；</p>
+<p>#define在<strong>预处理</strong>阶段进⾏⽂本替换，inline 函数在<strong>编译</strong>阶段进⾏替换；</p>
+<h3 id="预处理，编译，汇编，链接程序的区别"><a href="#预处理，编译，汇编，链接程序的区别" class="headerlink" title="预处理，编译，汇编，链接程序的区别"></a>预处理，编译，汇编，链接程序的区别</h3><p>预处理器→编译器→汇编器→链接器</p>
+<p>预处理阶段：#include 将把系统中的头⽂件插⼊到程序⽂本中，通常是以 <strong>.i</strong> 结尾的⽂件。<br>编译阶段：编译器将 hello.i ⽂件翻译成⽂本⽂件 hello.s  （到汇编）<br>汇编阶段：汇编器将 hello.s 翻译成机器语⾔指令。把这些指令打包成可᯿定位⽬标程序，即 .o⽂件。<br>链接阶段：⽐如 hello 程序调⽤ printf 程序，它是每个 C 编译器都会提供的标准库 C 的函数。这个函数存在于⼀个 名叫 printf.o 的单独编译好的⽬标⽂件中，这个⽂件将以某种⽅式合并到 hello.o 中。链接器就负责这种合并。得 到的是可执⾏⽬标⽂件。</p>
+<h3 id="说一下-fork，wait，exec-函数"><a href="#说一下-fork，wait，exec-函数" class="headerlink" title="说一下 fork，wait，exec 函数"></a>说一下 fork，wait，exec 函数</h3><p>⽗进程产⽣⼦进程使⽤ fork 拷⻉出来⼀个⽗进程的副本，此时只拷⻉了⽗进程的<strong>⻚表</strong>，<strong>两个进程都读同⼀块内存</strong>。<br>当有进程写的时候使⽤写实拷⻉机制分配内存，exec 函数可以加载⼀个 <strong>elf文件</strong>去替换⽗进程，从此⽗进程和⼦进 程就可以运⾏不同的程序了<br>fork 从⽗进程返回⼦进程的 pid，从⼦进程返回 0，调⽤了 <strong>wait</strong> 的⽗进程将会发⽣<strong>阻塞</strong>，直到有⼦进程状态改变， 执⾏成功返回 0，错误返回 -1。<br>exec 执⾏成功则⼦进程从新的程序开始运⾏，⽆返回值，执⾏失败返回 -1。</p>
+<h3 id="动态链接和静态链接区别"><a href="#动态链接和静态链接区别" class="headerlink" title="动态链接和静态链接区别"></a>动态链接和静态链接区别</h3><p>静态连接库就是把 (lib) ⽂件中⽤到的函数代码直接链接进⽬标程序，程序运⾏的时候不再需要其它的库⽂件</p>
+<p>动态链接就是把调⽤的函数所在<strong>⽂件模块（DLL）</strong>和<strong>调⽤函数在⽂件中的位置等信息</strong>链接进⽬标程序，程序运⾏的时候 再从 DLL 中寻找相应函数代码，因此需要相应 DLL ⽂件的⽀持。</p>
+<h2 id="类和数据抽象"><a href="#类和数据抽象" class="headerlink" title="类和数据抽象"></a>类和数据抽象</h2><h3 id="类如何实现只能静态分配和只能动态分配"><a href="#类如何实现只能静态分配和只能动态分配" class="headerlink" title="类如何实现只能静态分配和只能动态分配"></a>类如何实现只能静态分配和只能动态分配</h3><p><strong>只能静态分配：</strong>new、delete 运算符重载为 private 属性<br><strong>只能动态分配：</strong>把构造、析构函数设为 protected 属性，再⽤⼦类来动态创建</p>
+<p>建⽴类的对象有两种⽅式：</p>
+<ul>
+<li><p>静态建立：是由编译器为对象在栈空间中分配内存</p>
+</li>
+<li><p>动态建立：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A *p = <span class="keyword">new</span> <span class="built_in">A</span>(); </span><br></pre></td></tr></table></figure>
+
+<p>这个过程分为两步，第⼀步执⾏ operator new() 函数，在堆中搜索⼀块内存并进⾏分配；第⼆步调⽤类构造函数构造对象；</p>
+</li>
+<li><p>只有使⽤ new 运算符，对象才会被建⽴在堆上，因此只要限制 new 运算符就可以实现类对象只能建⽴在栈 上。可以将 new 运算符设为私有。</p>
+</li>
+</ul>
+<h3 id="哪些函数不能是虚函数"><a href="#哪些函数不能是虚函数" class="headerlink" title="哪些函数不能是虚函数"></a>哪些函数不能是虚函数</h3><p>构造函数	内联函数	静态函数	友元函数	普通函数</p>
+<h2 id="STL-容器和算法"><a href="#STL-容器和算法" class="headerlink" title="STL 容器和算法"></a>STL 容器和算法</h2><h3 id="C-的-STL-介绍（内存管理，allocator，函数，实现机理，多线程实-现等）"><a href="#C-的-STL-介绍（内存管理，allocator，函数，实现机理，多线程实-现等）" class="headerlink" title="C++ 的 STL 介绍（内存管理，allocator，函数，实现机理，多线程实 现等）"></a>C++ 的 STL 介绍（内存管理，allocator，函数，实现机理，多线程实 现等）</h3><p>容器，算法，迭代器，仿函数，配接器和配置器</p>
+<h4 id="内存管理-allocator"><a href="#内存管理-allocator" class="headerlink" title="内存管理 allocator"></a>内存管理 allocator</h4><p>第⼀级配置器直接使⽤ malloc()和 free()完成内存的分配和回收。<br>第⼆级配置器则根据 需求量的⼤⼩选择不同的策略执⾏。</p>
+<p>如果需求块⼤⼩⼤于 128bytes，则直接转⽽调⽤第⼀级配置器，使⽤ malloc()分配内存。如 果需求块⼤⼩⼩于 128bytes，第⼆级配置器中维护了 16 个⾃由链表，负责 16 种⼩型区块的次配置能⼒。</p>
+<p>即当有⼩于 128bytes 的需求块要求时，⾸先查看所需需求块⼤⼩所对应的链表中是否有空闲空间，如果有则直接 返回，如果没有，则向内存池中申请所需需求块⼤⼩的内存空间，如果申请成功，则将其加⼊到⾃由链表中。如果 内存池中没有空间，则使⽤ malloc() 从堆中进⾏申请，且申请到的⼤⼩是需求ᰁ的⼆倍（或⼆倍＋n 附加量），⼀ 倍放在⾃由空间中，⼀倍（或⼀倍＋n）放⼊内存池中。 如果 malloc()也失败，则会遍历⾃由空间链表，四处寻找“尚有未⽤区块，且区块够⼤”的 freelist，找到⼀块就挖出 ⼀块交出。如果还是没有，仍交由 malloc()处理，因为 malloc() 有 out-of-memory 处理机制或许有机会释放其他 的内存拿来⽤，如果可以就成功，如果不⾏就报 bad_alloc 异常。</p>
+<h4 id="回答⼀下-STL-⾥-resize-和-reserve-的区别"><a href="#回答⼀下-STL-⾥-resize-和-reserve-的区别" class="headerlink" title="回答⼀下 STL ⾥ resize 和 reserve 的区别"></a>回答⼀下 STL ⾥ resize 和 reserve 的区别</h4><p>resize()：改变当前容器内含有元素的数量(size())<br>reserve()：改变当前容器的最⼤容量（capacity），不会⽣成元素</p>
+<h2 id="情景设计题"><a href="#情景设计题" class="headerlink" title="情景设计题"></a>情景设计题</h2><h3 id="HelloWorld-程序开始到打印到屏幕上的全过程"><a href="#HelloWorld-程序开始到打印到屏幕上的全过程" class="headerlink" title="HelloWorld 程序开始到打印到屏幕上的全过程?"></a>HelloWorld 程序开始到打印到屏幕上的全过程?</h3><ul>
+<li>用户告诉操作系统执行HelloWorld程序（键入）</li>
+<li>操作系统：找到HelloWorld程序相关信息，检查其类型<strong>是否有可执行文件</strong>；并通过<strong>程序首部信息</strong>，确定代码和数据在可执行文件中的<strong>位置</strong>并计算对应的<strong>磁盘块地址</strong></li>
+<li>操作系统：创建一个新进程，将HelloWorld可执行文件映射到该进程结构</li>
+<li>操作系统：为HelloWorld程序设置上下文环境，并跳到程序开始处</li>
+<li>执行HelloWorld程序的第一条指令，发生缺页异常</li>
+<li>操作系统：分配一页物理内存，并将代码从磁盘读入内存，然后继续执行HelloWorld</li>
+<li>HelloWorld程序执行puts函数（系统调用），在显示器上写一串字符串</li>
+<li>操作系统：找到要将字符串送往的显示设备，通常设备是由一个进程控制的，所以操作系统要将改字符串送给改进程</li>
+<li>操作系统：控制设备的进程告诉设备的窗口系统，它要显示该字符串，窗口系统确定这是一个合法的操作，然后将字符串转换成像素，将像素写入设备的存储映像区</li>
+<li>视频硬件将像素转换成显示器可接收和一组控制数据信号</li>
+<li>显示器解释信号，激发液晶屏</li>
+<li>ok</li>
+</ul>
+<h3 id="请你来说⼀下-fork-函数"><a href="#请你来说⼀下-fork-函数" class="headerlink" title="请你来说⼀下 fork 函数"></a>请你来说⼀下 fork 函数</h3><p>成功调⽤ fork() 会创建⼀个新的进程，它⼏乎与调⽤ fork() 的进程⼀模⼀样<br>成功的 fork( ) 调⽤会返回0。在⽗进程中 fork() 返回⼦进程的 pid</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#Fork：创建⼀个和当前进程映像⼀样的进程可以通过 fork() 系统调⽤：</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">pid_t</span> <span class="title">fork</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>最常⻅的 fork() ⽤法是创建⼀个新的进程，然后使⽤ exec() 载⼊⼆进制映像，替换当前进程的映像。</p>
+<h3 id="简单说⼀下-printf-实现原理"><a href="#简单说⼀下-printf-实现原理" class="headerlink" title="简单说⼀下 printf 实现原理"></a>简单说⼀下 printf 实现原理</h3><p>C&#x2F;C++的函数参数是通过压⼊堆栈的⽅式来给函数传参数的（堆栈 是⼀种先进后出的数据结构）。<br>在C&#x2F;C++中，对函数参数的扫描是从后向前的。<br>printf的第⼀个被找到的参数就是那个字符指针，就是被双引号括起来的那⼀部分， 函数通过判断字符串⾥控制参数的个数来判断参数个数及数据类型，通过这些就可算出数据需要的堆栈指针的偏移量了。</p>
+<h3 id="讲讲⼤端⼩端，如何检测"><a href="#讲讲⼤端⼩端，如何检测" class="headerlink" title="讲讲⼤端⼩端，如何检测"></a>讲讲⼤端⼩端，如何检测</h3><p>⼤端模式：是指数据的⾼字节保存在内存的低地址中，⽽数据的低字节保存在内存的⾼地址端。<br>⼩端模式，是指数据的⾼字节保存在内存的⾼地址中，低位字节保存在在内存的低地址端。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0x12345678</span>;</span><br><span class="line"><span class="type">int</span> *c = &amp;a;</span><br><span class="line">c[<span class="number">0</span>] == <span class="number">0x12</span> \\ ⼤端模式</span><br><span class="line">c[<span class="number">0</span>] == <span class="number">0x78</span> \\ ⼩段模式</span><br></pre></td></tr></table></figure>
+
+<p><strong>用共同体判断</strong><br>union 的成员数据共⽤内存，并且⾸地址都是低地址⾸字节。Int i&#x3D; 1时：⼤端存储1放在最⾼位，⼩端存储1放在最 低位。当读取char ch时，是最低地址⾸字节，⼤⼩端会显示不同的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> <span class="keyword">union</span> &#123;</span><br><span class="line"> <span class="type">int</span> a; <span class="comment">//4 bytes</span></span><br><span class="line"> <span class="type">char</span> b; <span class="comment">//1 byte</span></span><br><span class="line"> &#125; data;</span><br><span class="line"> data.a = <span class="number">1</span>; <span class="comment">//占4 bytes，⼗六进制可表示为 0x 00 00 00 01</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">//b因为是char型只占1Byte，a因为是int型占4Byte</span></span><br><span class="line"> <span class="comment">//所以，在联合体data所占内存中，b所占内存等于a所占内存的低地址部分</span></span><br><span class="line"> <span class="keyword">if</span>(<span class="number">1</span> == data.b) &#123;</span><br><span class="line"> <span class="comment">//⾛到这⾥意味着说明a的低字节，被取给到了b</span></span><br><span class="line"> <span class="comment">//即a的低字节存在了联合体所占内存的(起始)低地址，符合⼩端模式特征</span></span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;Little_Endian\n&quot;</span>);</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;Big_Endian\n&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="C-11-新特性"><a href="#C-11-新特性" class="headerlink" title="C++11 新特性"></a>C++11 新特性</h1><h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="OSI-七层协议模型"><a href="#OSI-七层协议模型" class="headerlink" title="OSI 七层协议模型"></a>OSI 七层协议模型</h2><h3 id="各层功能"><a href="#各层功能" class="headerlink" title="各层功能"></a>各层功能</h3><ul>
+<li>物理层：物理层（Physical Layer）确保原始的数据可在各种物理媒体上传输	 bit 流</li>
+<li>数据链路层：数据链路层（Data Link Layer）在不可靠的物理介质上提供可靠的传输。bit 流封装成 frame 帧</li>
+<li>⽹络层：⼦⽹间的数据包进⾏路由选择	数据包（packet）</li>
+<li>传输层：传输层是第⼀个端到端，即主机到主机的层次	数据段</li>
+<li>会话层：这⼀层管理主机之间的会话进程，即负责建⽴、管理、终⽌进程之间的会话。	⽐如说建⽴会话，如 session 认证、 断点续传。</li>
+<li>表示层：⽤户信息的语法表示问题。如：图像、视频编解码，数据加密</li>
+<li>应用层：操作系统或⽹络应⽤程序提供访问⽹络服务的接⼝。</li>
+</ul>
 
       
 
@@ -391,6 +520,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2023/09/08/%E5%8F%8D%E5%90%91%E9%9D%A2%E8%AF%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2023/09/04/C++%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" id="article-nav-older" class="article-nav-link-wrap">
